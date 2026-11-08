@@ -169,7 +169,54 @@ footer{text-align:center;padding:20px;color:#64748b}
 <tbody id="suppliersTable"></tbody>
 </table></div>
 </section>
+<h3>د مشتری قرض تادیه</h3>
 
+<form id="customerPaymentForm">
+<div class="row">
+
+<div>
+<label>مشتری</label>
+<select id="paymentCustomer" required>
+<option value="">مشتری وټاکه</option>
+</select>
+</div>
+
+<div>
+<label>د تادیې نېټه</label>
+<input type="date" id="customerPaymentDate" required>
+</div>
+
+<div>
+<label>د تادیې مقدار (AFN)</label>
+<input type="number" id="customerPaymentAmount"
+min="0.01" step="any" required>
+</div>
+
+<div>
+<label>یادښت</label>
+<input id="customerPaymentNote">
+</div>
+
+</div>
+
+<button type="submit">د مشتری تادیه ثبت کړه</button>
+</form>
+
+<h3>د مشتریانو د تادیاتو تاریخچه</h3>
+
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>نېټه</th>
+<th>مشتری</th>
+<th>مقدار</th>
+<th>یادښت</th>
+</tr>
+</thead>
+<tbody id="customerPaymentsTable"></tbody>
+</table>
+</div>
 <section id="expenses" class="page">
 <h3>لګښتونه</h3>
 <form id="expenseForm">
@@ -246,7 +293,9 @@ try{
 }catch(e){
  db=newDB();
 }
-
+// د مشتریانو د تادیاتو معلومات
+db.customerPayments = Array.isArray(db.customerPayments)
+ ? db.customerPayments : [];
 function saveDB(){
  localStorage.setItem(DB_KEY,JSON.stringify(db));
  renderAll();
@@ -378,7 +427,83 @@ document.getElementById("customerForm").addEventListener("submit",function(e){
  saveDB();
  this.reset();
 });
+document.getElementById("customerPaymentForm")
+.addEventListener("submit",function(e){
 
+ e.preventDefault();
+
+ const customerId=document.getElementById("paymentCustomer").value;
+
+ const customer=db.customers.find(c=>c.id===customerId);
+
+ if(!customer){
+  return alert("مشتری وټاکه");
+ }
+
+ const amount=Number(
+ document.getElementById("customerPaymentAmount").value
+ );
+
+ const date=document.getElementById("customerPaymentDate").value;
+
+ const note=document.getElementById("customerPaymentNote").value.trim();
+
+ if(!date){
+  return alert("د تادیې نېټه وټاکه");
+ }
+
+ if(amount<=0){
+  return alert("د تادیې مقدار سم نه دی");
+ }
+
+ const balance=customerBalance(customer);
+
+ if(amount>balance){
+  return alert("تادیه د مشتری له قرض څخه زیاته ده");
+ }
+
+ db.customerPayments.push({
+  id:crypto.randomUUID(),
+  customerId:customer.id,
+  customerName:customer.name,
+  amount,
+  date,
+  note
+ });
+
+ saveDB();
+
+ this.reset();
+
+ document.getElementById("customerPaymentDate").value=dateNow();
+// د تادیې فورم کې د مشتریانو نومونه
+document.getElementById("paymentCustomer").innerHTML=
+'<option value="">مشتری وټاکه</option>'+
+db.customers.map(c=>`
+ <option value="${c.id}">
+ ${esc(c.name)} — قرض: ${money(customerBalance(c))}
+ </option>
+`).join("");
+
+// د تادیاتو تاریخچه
+document.getElementById("customerPaymentsTable").innerHTML=
+db.customerPayments.slice().reverse().map(p=>`
+ <tr>
+ <td>${esc(p.date)}</td>
+ <td>${esc(p.customerName)}</td>
+ <td>${money(p.amount)}</td>
+ <td>${esc(p.note||"")}</td>
+ </tr>
+`).join("");
+
+// د تادیې نېټه
+const paymentDate=document.getElementById("customerPaymentDate");
+
+if(!paymentDate.value){
+ paymentDate.value=dateNow();
+}
+ alert("د مشتری تادیه ثبت شوه");
+});
 document.getElementById("supplierForm").addEventListener("submit",function(e){
  e.preventDefault();
  db.suppliers.push({
@@ -418,10 +543,20 @@ function customerBalance(c){
  return c.opening+sales-paid;
 }
 
-function supplierBalance(s){
- const purchases=db.purchases.filter(p=>p.supplierId===s.id).reduce((a,p)=>a+p.total,0);
- const paid=db.purchases.filter(p=>p.supplierId===s.id).reduce((a,p)=>a+p.paid,0);
- return s.opening+purchases-paid;
+function customerBalance(c){
+ const sales=db.sales
+ .filter(s=>s.customerId===c.id)
+ .reduce((a,s)=>a+s.total,0);
+
+ const paid=db.sales
+ .filter(s=>s.customerId===c.id)
+ .reduce((a,s)=>a+s.paid,0);
+
+ const repayments=db.customerPayments
+ .filter(p=>p.customerId===c.id)
+ .reduce((a,p)=>a+Number(p.amount||0),0);
+
+ return c.opening+sales-paid-repayments;
 }
 
 function renderAll(){
