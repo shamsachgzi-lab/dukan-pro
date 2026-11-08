@@ -97,7 +97,16 @@ footer{text-align:center;padding:20px;color:#64748b}
 <button type="button" class="gray" onclick="resetProductForm()">پاکول</button>
 </form>
 <div class="tablewrap"><table>
-<thead><tr><th>نوم</th><th>واحد</th><th>موجودي</th><th>پېرود</th><th>خرڅلاو</th><th>عملیات</th></tr></thead>
+<thead>
+<tr>
+<th>نېټه</th>
+<th>د خرڅلاو ډول</th>
+<th>محصول</th>
+<th>مقدار</th>
+<th>مجموعه</th>
+<th>پرداخت</th>
+</tr>
+</thead>
 <tbody id="productsTable"></tbody>
 </table></div>
 </section>
@@ -124,7 +133,13 @@ footer{text-align:center;padding:20px;color:#64748b}
 <h3>د خرڅلاو ثبت</h3>
 <form id="saleForm">
 <div class="row">
-<div><label>محصول</label><select id="saleProduct" required></select></div>
+<div><label> <div>
+<label>د خرڅلاو ډول</label>
+<select id="saleType" required>
+<option value="retail">پرچون خرڅلاو</option>
+<option value="wholesale">عمده خرڅلاو</option>
+</select>
+</div>محصول</label><select id="saleProduct" required></select></div>
 <div><label>مقدار</label><input id="saleQty" type="number" min="0.001" step="any" required></div>
 <div><label>د هر واحد قیمت</label><input id="salePrice" type="number" min="0" required></div>
 <div><label>پرداخت شوې پیسې</label><input id="salePaid" type="number" min="0" value="0" required></div>
@@ -399,6 +414,7 @@ document.getElementById("saleForm").addEventListener("submit",function(e){
  const price=Number(document.getElementById("salePrice").value);
  const paid=Number(document.getElementById("salePaid").value);
  const customerId=document.getElementById("saleCustomer").value;
+ const saleType=document.getElementById("saleType").value;
  const total=qty*price;
 
  if(qty<=0 || qty>product.qty)return alert("موجودي کافي نه ده");
@@ -407,10 +423,18 @@ document.getElementById("saleForm").addEventListener("submit",function(e){
  product.qty-=qty;
 
  db.sales.push({
-  id:crypto.randomUUID(),date:dateNow(),productId:product.id,
-  productName:product.name,qty,price,cost:product.buy,
-  total,paid,customerId
- });
+  id:crypto.randomUUID(),
+  date:dateNow(),
+  productId:product.id,
+  productName:product.name,
+  qty,
+  price,
+  cost:product.buy,
+  total,
+  paid,
+  customerId,
+  saleType
+});
 
  saveDB();
  this.reset();
@@ -577,8 +601,18 @@ function renderAll(){
  document.getElementById("totalExpenses").textContent=money(expenses.reduce((a,x)=>a+x.amount,0));
 
  document.getElementById("productsTable").innerHTML=products.map(p=>`
- <tr><td>${esc(p.name)}</td><td>${esc(p.unit)}</td><td>${p.qty}</td>
- <td>${money(p.buy)}</td><td>${money(p.sell)}</td>
+<tr><td>${esc(p.name)}</td><td>${esc(p.unit)}</td><td>${p.qty}</td>
+<td>${money(p.buy)}</td><td>${money(p.sell)}</td>
+document.getElementById("salesTable").innerHTML=sales.map(s=>`
+ <tr>
+ <td>${esc(s.date)}</td>
+ <td>${s.saleType==="wholesale"?"عمده":"پرچون"}</td>
+ <td>${esc(s.productName)}</td>
+ <td>${s.qty}</td>
+ <td>${money(s.total)}</td>
+ <td>${money(s.paid)}</td>
+ </tr>
+`).join("");
  <td><button onclick="editProduct('${p.id}')">اصلاح</button>
  <button class="danger" onclick="deleteProduct('${p.id}')">حذف</button></td></tr>`).join("");
 
@@ -590,10 +624,7 @@ function renderAll(){
  document.getElementById("saleCustomer").innerHTML='<option value="">نغدي / نامعلوم</option>'+db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
 
  document.getElementById("purchasesTable").innerHTML=purchases.map(p=>`
- <tr><td>${p.date}</td><td>${esc(p.productName)}</td><td>${p.qty}</td><td>${money(p.total)}</td><td>${money(p.paid)}</td></tr>`).join("");
-
- document.getElementById("salesTable").innerHTML=sales.map(s=>`
- <tr><td>${s.date}</td><td>${esc(s.productName)}</td><td>${s.qty}</td><td>${money(s.total)}</td><td>${money(s.paid)}</td></tr>`).join("");
+ <tr><td>${p.date}</td><td>${esc(p.productName)}</td><td>${p.qty}</td><td>${money(p.total)}</td><td>${money(p.paid)}</td></tr>`).
 
  document.getElementById("customersTable").innerHTML=db.customers.map(c=>`
  <tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${money(c.opening)}</td><td>${money(customerBalance(c))}</td></tr>`).join("");
