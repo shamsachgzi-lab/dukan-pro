@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ps" dir="rtl">
 <head>
@@ -11,39 +10,31 @@
 body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f1f5f9;color:#172033}
 header{background:#123b64;color:white;padding:18px;text-align:center}
 header h2{margin:0 0 6px}
-header p{margin:0;font-size:14px}
-nav{display:flex;flex-wrap:wrap;gap:6px;padding:10px;background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 5px #ddd}
-nav button{flex:1;min-width:90px}
-button{border:0;border-radius:7px;padding:11px 14px;background:#1769aa;color:white;font-size:15px;cursor:pointer}
-button:hover{opacity:.9}
-nav button{background:#e5edf5;color:#123b64}
+nav{display:flex;flex-wrap:wrap;gap:6px;padding:10px;background:white;position:sticky;top:0;z-index:5}
+nav button{flex:1;min-width:90px;background:#e5edf5;color:#123b64}
 nav button.active{background:#1769aa;color:white}
+button{border:0;border-radius:7px;padding:10px 14px;background:#1769aa;color:white;font-size:15px;cursor:pointer;margin:2px}
+button:hover{opacity:.9}
 main{padding:15px;max-width:1100px;margin:auto}
-.page{display:none}
-.page.active{display:block}
-h3{margin-top:5px;color:#123b64}
+.page{display:none}.page.active{display:block}
+h3{color:#123b64}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.card{background:white;padding:16px;border-radius:10px;box-shadow:0 2px 6px #ddd}
-.card small{color:#64748b}
-.card strong{display:block;font-size:23px;margin-top:8px}
-form{background:white;padding:15px;border-radius:10px;margin-bottom:15px}
+.card,form{background:white;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 6px #ddd}
+.card strong{display:block;font-size:22px;margin-top:8px}
 label{display:block;margin:10px 0 5px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;font-size:16px;background:white}
+input,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:7px;font-size:16px}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 table{width:100%;border-collapse:collapse;background:white;margin-top:12px}
-th,td{border:1px solid #dbe2ea;padding:9px;text-align:right;font-size:14px}
+th,td{border:1px solid #dbe2ea;padding:8px;text-align:right;font-size:13px}
 th{background:#e8f0f8}
 .tablewrap{overflow-x:auto}
-.danger{background:#b42318}
-.green{background:#16803c}
-.gray{background:#64748b}
-footer{text-align:center;padding:20px;color:#64748b}
+.danger{background:#b42318}.green{background:#16803c}.gray{background:#64748b}
 .notice{background:#fff7d6;padding:12px;border-radius:8px;margin-bottom:12px}
+footer{text-align:center;padding:20px;color:#64748b}
 </style>
 </head>
 
 <body>
-
 <header>
 <h2 id="shopTitle">شاهین فروشگاه</h2>
 <p>Dukan Pro — دکان حساب او موجودي</p>
@@ -56,6 +47,7 @@ footer{text-align:center;padding:20px;color:#64748b}
 <button onclick="showPage('sale',this)">خرڅلاو</button>
 <button onclick="showPage('customers',this)">مشتریان</button>
 <button onclick="showPage('suppliers',this)">عرضه‌کوونکي</button>
+<button onclick="showPage('payments',this)">تادیات</button>
 <button onclick="showPage('expenses',this)">لګښتونه</button>
 <button onclick="showPage('reports',this)">راپورونه</button>
 <button onclick="showPage('settings',this)">تنظیمات</button>
@@ -66,15 +58,16 @@ footer{text-align:center;padding:20px;color:#64748b}
 <section id="home" class="page active">
 <h3>د دکان عمومي معلومات</h3>
 <div class="cards">
-<div class="card"><small>ټول محصولات</small><strong id="countProducts">0</strong></div>
-<div class="card"><small>د موجودۍ ارزښت</small><strong id="stockValue">0</strong></div>
-<div class="card"><small>ټول خرڅلاو</small><strong id="totalSales">0</strong></div>
-<div class="card"><small>ټول پېرود</small><strong id="totalPurchases">0</strong></div>
-<div class="card"><small>د مشتریانو پور</small><strong id="customerDebt">0</strong></div>
-<div class="card"><small>د عرضه‌کوونکو پور</small><strong id="supplierDebt">0</strong></div>
-<div class="card"><small>ټول لګښتونه</small><strong id="totalExpenses">0</strong></div>
+<div class="card">ټول محصولات<strong id="countProducts">0</strong></div>
+<div class="card">د موجودۍ ارزښت<strong id="stockValue">0</strong></div>
+<div class="card">ټول خرڅلاو<strong id="totalSales">0</strong></div>
+<div class="card">ټول پېرود<strong id="totalPurchases">0</strong></div>
+<div class="card">د مشتریانو پور<strong id="customerDebt">0</strong></div>
+<div class="card">د عرضه‌کوونکو پور<strong id="supplierDebt">0</strong></div>
+<div class="card">لګښتونه<strong id="totalExpenses">0</strong></div>
+<div class="card">خالصه ګټه<strong id="netProfit">0</strong></div>
 </div>
-<div class="notice">د معلوماتو د خوندي ساتلو لپاره په منظم ډول Backup واخلئ.</div>
+<div class="notice">په منظم ډول Backup واخلئ.</div>
 </section>
 
 <section id="products" class="page">
@@ -91,9 +84,9 @@ footer{text-align:center;padding:20px;color:#64748b}
 </select></div>
 <div><label>د پېرود قیمت</label><input id="productBuy" type="number" min="0" value="0" required></div>
 <div><label>د خرڅلاو قیمت</label><input id="productSell" type="number" min="0" value="0" required></div>
-<div><label>لومړنۍ موجودي</label><input id="productQty" type="number" min="0" value="0" required></div>
+<div><label>موجودي</label><input id="productQty" type="number" min="0" step="any" value="0" required></div>
 </div>
-<button type="submit">محصول ثبت / اصلاح</button>
+<button>محصول ثبت / اصلاح</button>
 <button type="button" class="gray" onclick="resetProductForm()">پاکول</button>
 </form>
 <div class="tablewrap"><table>
@@ -103,16 +96,16 @@ footer{text-align:center;padding:20px;color:#64748b}
 </section>
 
 <section id="purchase" class="page">
-<h3>د پېرود ثبت</h3>
+<h3>پېرود</h3>
 <form id="purchaseForm">
 <div class="row">
 <div><label>محصول</label><select id="purchaseProduct" required></select></div>
 <div><label>مقدار</label><input id="purchaseQty" type="number" min="0.001" step="any" required></div>
 <div><label>د هر واحد قیمت</label><input id="purchasePrice" type="number" min="0" required></div>
-<div><label>پرداخت شوې پیسې</label><input id="purchasePaid" type="number" min="0" value="0" required></div>
-<div><label>عرضه‌کوونکی</label><select id="purchaseSupplier"><option value="">نغدي / نامعلوم</option></select></div>
+<div><label>اوسنۍ پرداخت</label><input id="purchasePaid" type="number" min="0" value="0" required></div>
+<div><label>عرضه‌کوونکی</label><select id="purchaseSupplier"></select></div>
 </div>
-<button type="submit">پېرود ثبت کړه</button>
+<button>پېرود ثبت کړه</button>
 </form>
 <div class="tablewrap"><table>
 <thead><tr><th>نېټه</th><th>محصول</th><th>مقدار</th><th>مجموعه</th><th>پرداخت</th></tr></thead>
@@ -121,16 +114,16 @@ footer{text-align:center;padding:20px;color:#64748b}
 </section>
 
 <section id="sale" class="page">
-<h3>د خرڅلاو ثبت</h3>
+<h3>خرڅلاو</h3>
 <form id="saleForm">
 <div class="row">
 <div><label>محصول</label><select id="saleProduct" required></select></div>
 <div><label>مقدار</label><input id="saleQty" type="number" min="0.001" step="any" required></div>
 <div><label>د هر واحد قیمت</label><input id="salePrice" type="number" min="0" required></div>
-<div><label>پرداخت شوې پیسې</label><input id="salePaid" type="number" min="0" value="0" required></div>
-<div><label>مشتری</label><select id="saleCustomer"><option value="">نغدي / نامعلوم</option></select></div>
+<div><label>اوسنۍ پرداخت</label><input id="salePaid" type="number" min="0" value="0" required></div>
+<div><label>مشتری</label><select id="saleCustomer"></select></div>
 </div>
-<button type="submit">خرڅلاو ثبت کړه</button>
+<button>خرڅلاو ثبت کړه</button>
 </form>
 <div class="tablewrap"><table>
 <thead><tr><th>نېټه</th><th>محصول</th><th>مقدار</th><th>مجموعه</th><th>پرداخت</th></tr></thead>
@@ -142,11 +135,11 @@ footer{text-align:center;padding:20px;color:#64748b}
 <h3>مشتریان</h3>
 <form id="customerForm">
 <div class="row">
-<div><label>د مشتری نوم</label><input id="customerName" required></div>
+<div><label>نوم</label><input id="customerName" required></div>
 <div><label>شمېره</label><input id="customerPhone"></div>
 <div><label>پخوانی پور</label><input id="customerOpening" type="number" min="0" value="0"></div>
 </div>
-<button type="submit">مشتری ثبت کړه</button>
+<button>مشتری ثبت کړه</button>
 </form>
 <div class="tablewrap"><table>
 <thead><tr><th>نوم</th><th>شمېره</th><th>پخوانی پور</th><th>اوسنی پور</th></tr></thead>
@@ -158,15 +151,33 @@ footer{text-align:center;padding:20px;color:#64748b}
 <h3>عرضه‌کوونکي</h3>
 <form id="supplierForm">
 <div class="row">
-<div><label>د عرضه‌کوونکي نوم</label><input id="supplierName" required></div>
+<div><label>نوم</label><input id="supplierName" required></div>
 <div><label>شمېره</label><input id="supplierPhone"></div>
-<div><label>پخوانی پور (د دکان پور)</label><input id="supplierOpening" type="number" min="0" value="0"></div>
+<div><label>پخوانی پور</label><input id="supplierOpening" type="number" min="0" value="0"></div>
 </div>
-<button type="submit">عرضه‌کوونکی ثبت کړه</button>
+<button>عرضه‌کوونکی ثبت کړه</button>
 </form>
 <div class="tablewrap"><table>
 <thead><tr><th>نوم</th><th>شمېره</th><th>پخوانی پور</th><th>اوسنی پور</th></tr></thead>
 <tbody id="suppliersTable"></tbody>
+</table></div>
+</section>
+
+<section id="payments" class="page">
+<h3>د پورونو تادیات</h3>
+<form id="paymentForm">
+<div class="row">
+<div><label>د تادیې ډول</label>
+<select id="paymentType"><option value="customer">د مشتری تادیه</option><option value="supplier">عرضه‌کوونکي ته پرداخت</option></select></div>
+<div><label>نوم</label><select id="paymentPerson" required></select></div>
+<div><label>مقدار (AFN)</label><input id="paymentAmount" type="number" min="0.01" step="any" required></div>
+<div><label>یادښت</label><input id="paymentNote"></div>
+</div>
+<button>تادیه ثبت کړه</button>
+</form>
+<div class="tablewrap"><table>
+<thead><tr><th>نېټه</th><th>ډول</th><th>نوم</th><th>مقدار</th><th>یادښت</th></tr></thead>
+<tbody id="paymentsTable"></tbody>
 </table></div>
 </section>
 
@@ -175,9 +186,9 @@ footer{text-align:center;padding:20px;color:#64748b}
 <form id="expenseForm">
 <div class="row">
 <div><label>د لګښت نوم</label><input id="expenseName" required></div>
-<div><label>مقدار (AFN)</label><input id="expenseAmount" type="number" min="0" required></div>
+<div><label>مقدار AFN</label><input id="expenseAmount" type="number" min="0" required></div>
 </div>
-<button type="submit">لګښت ثبت کړه</button>
+<button>لګښت ثبت کړه</button>
 </form>
 <div class="tablewrap"><table>
 <thead><tr><th>نېټه</th><th>لګښت</th><th>مقدار</th></tr></thead>
@@ -187,36 +198,34 @@ footer{text-align:center;padding:20px;color:#64748b}
 
 <section id="reports" class="page">
 <h3>راپورونه</h3>
-<div class="cards">
-<div class="card"><small>د خرڅلاو مجموعه</small><strong id="reportSales">0</strong></div>
-<div class="card"><small>د پېرود مجموعه</small><strong id="reportPurchases">0</strong></div>
-<div class="card"><small>د خرڅلاو ناخالصه ګټه</small><strong id="reportProfit">0</strong></div>
-<div class="card"><small>لګښتونه</small><strong id="reportExpense">0</strong></div>
-<div class="card"><small>تقریبي خالصه ګټه</small><strong id="reportNet">0</strong></div>
+<div class="row">
+<div><label>له نېټې</label><input type="date" id="dateFrom"></div>
+<div><label>تر نېټې</label><input type="date" id="dateTo"></div>
 </div>
-<p>دا راپور د ثبت شوو معاملاتو پر بنسټ دی. د پخوانیو نرخونو بدلون ممکن د ګټې محاسبه اغېزمنه کړي.</p>
+<button onclick="renderReports()">راپور ښکاره کړه</button>
+<button class="gray" onclick="clearReportDates()">ټولې نېټې</button>
+<div class="cards">
+<div class="card">خرڅلاو<strong id="reportSales">0</strong></div>
+<div class="card">پېرود<strong id="reportPurchases">0</strong></div>
+<div class="card">ناخالصه ګټه<strong id="reportProfit">0</strong></div>
+<div class="card">لګښتونه<strong id="reportExpense">0</strong></div>
+<div class="card">خالصه ګټه<strong id="reportNet">0</strong></div>
+</div>
 </section>
 
 <section id="settings" class="page">
 <h3>تنظیمات او Backup</h3>
 <form id="settingsForm">
-<label>د دکان نوم</label>
-<input id="settingShopName" value="شاهین فروشگاه">
-<button type="submit">نوم بدل کړه</button>
+<label>د دکان نوم</label><input id="settingShopName">
+<button>نوم بدل کړه</button>
 </form>
 <div class="card">
-<h4>Backup / Restore</h4>
 <button onclick="backupData()">Backup ډاونلوډ</button>
-<br><br>
-<label>د Backup فایل بېرته داخلول</label>
-<input type="file" id="restoreFile" accept=".json,application/json">
-<br><br>
-<button class="danger" onclick="restoreData()">Restore</button>
-<br><br>
+<label>Backup فایل</label><input type="file" id="restoreFile" accept=".json">
+<button class="green" onclick="restoreData()">Restore</button>
 <button class="danger" onclick="clearData()">ټول معلومات حذف کړه</button>
 </div>
 </section>
-
 </main>
 
 <footer>Dukan Pro — شاهین فروشگاه</footer>
@@ -224,307 +233,261 @@ footer{text-align:center;padding:20px;color:#64748b}
 <script>
 "use strict";
 
-const DB_KEY = "SHAHEEN_DUKAN_PRO_V2";
+const DB_KEY="SHAHEEN_DUKAN_PRO_V2";
 
 function newDB(){
- return {
-  version:2,
-  settings:{shopName:"شاهین فروشگاه"},
-  products:[],
-  purchases:[],
-  sales:[],
-  customers:[],
-  suppliers:[],
-  expenses:[]
- };
+return {
+version:2,
+settings:{shopName:"شاهین فروشگاه"},
+products:[],purchases:[],sales:[],
+customers:[],suppliers:[],expenses:[],payments:[]
+};
 }
 
 let db;
-
 try{
- db=JSON.parse(localStorage.getItem(DB_KEY)) || newDB();
-}catch(e){
- db=newDB();
+db=JSON.parse(localStorage.getItem(DB_KEY))||newDB();
+}catch(e){db=newDB();}
+
+function normalizeDB(){
+db.settings=db.settings||{shopName:"شاهین فروشگاه"};
+["products","purchases","sales","customers","suppliers","expenses","payments"].forEach(k=>{
+if(!Array.isArray(db[k]))db[k]=[];
+});
+db.payments=db.payments||[];
 }
+normalizeDB();
 
 function saveDB(){
- localStorage.setItem(DB_KEY,JSON.stringify(db));
- renderAll();
+localStorage.setItem(DB_KEY,JSON.stringify(db));
+renderAll();
 }
 
 function money(n){
- return Number(n||0).toLocaleString("en-US",{maximumFractionDigits:2})+" AFN";
+return Number(n||0).toLocaleString("en-US",{maximumFractionDigits:2})+" AFN";
 }
-
-function dateNow(){
- return new Date().toLocaleDateString("en-CA");
+function dateNow(){return new Date().toLocaleDateString("en-CA");}
+function id(){return crypto.randomUUID();}
+function esc(v){
+return String(v??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
 }
-
 function showPage(id,btn){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
- if(btn)btn.classList.add("active");
- renderAll();
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+if(btn)btn.classList.add("active");
+renderAll();
 }
 
 function resetProductForm(){
- document.getElementById("productForm").reset();
- document.getElementById("productId").value="";
+productForm.reset();productId.value="";
 }
 
-document.getElementById("productForm").addEventListener("submit",function(e){
- e.preventDefault();
+productForm.addEventListener("submit",e=>{
+e.preventDefault();
+const pid=productId.value;
+const name=productName.value.trim();
+const unit=productUnit.value;
+const buy=Number(productBuy.value);
+const sell=Number(productSell.value);
+const qty=Number(productQty.value);
+if(!name||buy<0||sell<0||qty<0)return alert("معلومات سمې داخلې کړه");
 
- const id=document.getElementById("productId").value;
- const name=document.getElementById("productName").value.trim();
- const unit=document.getElementById("productUnit").value;
- const buy=Number(document.getElementById("productBuy").value);
- const sell=Number(document.getElementById("productSell").value);
- const qty=Number(document.getElementById("productQty").value);
-
- if(!name || buy<0 || sell<0 || qty<0)return alert("معلومات سمې داخلې کړه");
-
- if(id){
-  const p=db.products.find(x=>x.id===id);
-  if(p){
-   p.name=name;p.unit=unit;p.buy=buy;p.sell=sell;
-  }
- }else{
-  db.products.push({id:crypto.randomUUID(),name,unit,buy,sell,qty});
- }
- resetProductForm();
- saveDB();
+if(pid){
+const p=db.products.find(x=>x.id===pid);
+if(p){
+p.name=name;p.unit=unit;p.buy=buy;p.sell=sell;
+if(!confirm("موجودي هم بدله شي؟")){}
+else p.qty=qty;
+}
+}else{
+db.products.push({id:id(),name,unit,buy,sell,qty});
+}
+resetProductForm();saveDB();
 });
 
-function editProduct(id){
- const p=db.products.find(x=>x.id===id);
- if(!p)return;
- document.getElementById("productId").value=p.id;
- document.getElementById("productName").value=p.name;
- document.getElementById("productUnit").value=p.unit;
- document.getElementById("productBuy").value=p.buy;
- document.getElementById("productSell").value=p.sell;
- document.getElementById("productQty").value=p.qty;
- showPage("products");
+function editProduct(pid){
+const p=db.products.find(x=>x.id===pid);if(!p)return;
+productId.value=p.id;productName.value=p.name;
+productUnit.value=p.unit;productBuy.value=p.buy;
+productSell.value=p.sell;productQty.value=p.qty;
+showPage("products");
+}
+function deleteProduct(pid){
+if(!confirm("محصول حذف شي؟"))return;
+if(db.sales.some(x=>x.productId===pid)||db.purchases.some(x=>x.productId===pid))
+return alert("دا محصول معاملې لري؛ حذف یې نه شو کولای.");
+db.products=db.products.filter(x=>x.id!==pid);saveDB();
 }
 
-function deleteProduct(id){
- if(!confirm("دا محصول حذف شي؟"))return;
- db.products=db.products.filter(p=>p.id!==id);
- saveDB();
-}
-
-document.getElementById("purchaseForm").addEventListener("submit",function(e){
- e.preventDefault();
- const product=db.products.find(p=>p.id===document.getElementById("purchaseProduct").value);
- if(!product)return alert("لومړی محصول ثبت کړه");
-
- const qty=Number(document.getElementById("purchaseQty").value);
- const price=Number(document.getElementById("purchasePrice").value);
- const paid=Number(document.getElementById("purchasePaid").value);
- const supplierId=document.getElementById("purchaseSupplier").value;
- const total=qty*price;
-
- if(qty<=0 || price<0 || paid<0 || paid>total)return alert("مقدار یا پرداخت سم نه دی");
-
- product.qty+=qty;
- product.buy=price;
-
- db.purchases.push({
-  id:crypto.randomUUID(),date:dateNow(),productId:product.id,
-  productName:product.name,qty,price,total,paid,
-  supplierId
- });
-
- saveDB();
- this.reset();
+purchaseForm.addEventListener("submit",e=>{
+e.preventDefault();
+const p=db.products.find(x=>x.id===purchaseProduct.value);
+if(!p)return alert("محصول وټاکه");
+const qty=Number(purchaseQty.value),price=Number(purchasePrice.value);
+const paid=Number(purchasePaid.value),supplierId=purchaseSupplier.value;
+const total=qty*price;
+if(qty<=0||price<0||paid<0||paid>total)return alert("معلومات سم نه دي");
+p.qty+=qty;p.buy=price;
+db.purchases.push({id:id(),date:dateNow(),productId:p.id,productName:p.name,qty,price,total,paid,supplierId});
+saveDB();purchaseForm.reset();
 });
 
-document.getElementById("saleForm").addEventListener("submit",function(e){
- e.preventDefault();
- const product=db.products.find(p=>p.id===document.getElementById("saleProduct").value);
- if(!product)return alert("لومړی محصول ثبت کړه");
-
- const qty=Number(document.getElementById("saleQty").value);
- const price=Number(document.getElementById("salePrice").value);
- const paid=Number(document.getElementById("salePaid").value);
- const customerId=document.getElementById("saleCustomer").value;
- const total=qty*price;
-
- if(qty<=0 || qty>product.qty)return alert("موجودي کافي نه ده");
- if(price<0 || paid<0 || paid>total)return alert("قیمت یا پرداخت سم نه دی");
-
- product.qty-=qty;
-
- db.sales.push({
-  id:crypto.randomUUID(),date:dateNow(),productId:product.id,
-  productName:product.name,qty,price,cost:product.buy,
-  total,paid,customerId
- });
-
- saveDB();
- this.reset();
+saleForm.addEventListener("submit",e=>{
+e.preventDefault();
+const p=db.products.find(x=>x.id===saleProduct.value);
+if(!p)return alert("محصول وټاکه");
+const qty=Number(saleQty.value),price=Number(salePrice.value);
+const paid=Number(salePaid.value),customerId=saleCustomer.value;
+const total=qty*price;
+if(qty<=0||qty>p.qty)return alert("موجودي کافي نه ده");
+if(price<0||paid<0||paid>total)return alert("معلومات سم نه دي");
+p.qty-=qty;
+db.sales.push({id:id(),date:dateNow(),productId:p.id,productName:p.name,qty,price,cost:p.buy,total,paid,customerId});
+saveDB();saleForm.reset();
 });
 
-document.getElementById("customerForm").addEventListener("submit",function(e){
- e.preventDefault();
- db.customers.push({
-  id:crypto.randomUUID(),
-  name:document.getElementById("customerName").value.trim(),
-  phone:document.getElementById("customerPhone").value.trim(),
-  opening:Number(document.getElementById("customerOpening").value)||0
- });
- saveDB();
- this.reset();
+customerForm.addEventListener("submit",e=>{
+e.preventDefault();
+db.customers.push({id:id(),name:customerName.value.trim(),phone:customerPhone.value.trim(),opening:Number(customerOpening.value)||0});
+saveDB();customerForm.reset();
 });
-
-document.getElementById("supplierForm").addEventListener("submit",function(e){
- e.preventDefault();
- db.suppliers.push({
-  id:crypto.randomUUID(),
-  name:document.getElementById("supplierName").value.trim(),
-  phone:document.getElementById("supplierPhone").value.trim(),
-  opening:Number(document.getElementById("supplierOpening").value)||0
- });
- saveDB();
- this.reset();
+supplierForm.addEventListener("submit",e=>{
+e.preventDefault();
+db.suppliers.push({id:id(),name:supplierName.value.trim(),phone:supplierPhone.value.trim(),opening:Number(supplierOpening.value)||0});
+saveDB();supplierForm.reset();
 });
-
-document.getElementById("expenseForm").addEventListener("submit",function(e){
- e.preventDefault();
- const amount=Number(document.getElementById("expenseAmount").value);
- if(amount<0)return alert("مقدار سم نه دی");
- db.expenses.push({
-  id:crypto.randomUUID(),
-  date:dateNow(),
-  name:document.getElementById("expenseName").value.trim(),
-  amount
- });
- saveDB();
- this.reset();
-});
-
-document.getElementById("settingsForm").addEventListener("submit",function(e){
- e.preventDefault();
- db.settings.shopName=document.getElementById("settingShopName").value.trim()||"شاهین فروشگاه";
- saveDB();
- alert("د دکان نوم بدل شو");
+expenseForm.addEventListener("submit",e=>{
+e.preventDefault();
+const amount=Number(expenseAmount.value);
+if(amount<0)return alert("مقدار سم نه دی");
+db.expenses.push({id:id(),date:dateNow(),name:expenseName.value.trim(),amount});
+saveDB();expenseForm.reset();
 });
 
 function customerBalance(c){
- const sales=db.sales.filter(s=>s.customerId===c.id).reduce((a,s)=>a+s.total,0);
- const paid=db.sales.filter(s=>s.customerId===c.id).reduce((a,s)=>a+s.paid,0);
- return c.opening+sales-paid;
+const sales=db.sales.filter(s=>s.customerId===c.id);
+const sold=sales.reduce((a,s)=>a+s.total,0);
+const salePaid=sales.reduce((a,s)=>a+s.paid,0);
+const repayments=db.payments.filter(p=>p.type==="customer"&&p.personId===c.id).reduce((a,p)=>a+p.amount,0);
+return c.opening+sold-salePaid-repayments;
+}
+function supplierBalance(s){
+const purchases=db.purchases.filter(p=>p.supplierId===s.id);
+const bought=purchases.reduce((a,p)=>a+p.total,0);
+const purchasePaid=purchases.reduce((a,p)=>a+p.paid,0);
+const payments=db.payments.filter(p=>p.type==="supplier"&&p.personId===s.id).reduce((a,p)=>a+p.amount,0);
+return s.opening+bought-purchasePaid-payments;
 }
 
-function supplierBalance(s){
- const purchases=db.purchases.filter(p=>p.supplierId===s.id).reduce((a,p)=>a+p.total,0);
- const paid=db.purchases.filter(p=>p.supplierId===s.id).reduce((a,p)=>a+p.paid,0);
- return s.opening+purchases-paid;
+paymentType.addEventListener("change",renderPaymentPeople);
+paymentForm.addEventListener("submit",e=>{
+e.preventDefault();
+const type=paymentType.value;
+const personId=paymentPerson.value;
+const amount=Number(paymentAmount.value);
+if(!personId||amount<=0)return alert("نوم او مقدار سم نه دی");
+const person=type==="customer"?db.customers.find(x=>x.id===personId):db.suppliers.find(x=>x.id===personId);
+if(!person)return;
+const balance=type==="customer"?customerBalance(person):supplierBalance(person);
+if(amount>balance)return alert("تادیه د پور له مقدار څخه زیاته ده");
+db.payments.push({id:id(),date:dateNow(),type,personId,personName:person.name,amount,note:paymentNote.value.trim()});
+saveDB();paymentForm.reset();renderPaymentPeople();
+});
+
+function renderPaymentPeople(){
+const type=paymentType.value;
+const list=type==="customer"?db.customers:db.suppliers;
+paymentPerson.innerHTML='<option value="">نوم وټاکه</option>'+list.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join("");
 }
+
+settingsForm.addEventListener("submit",e=>{
+e.preventDefault();
+db.settings.shopName=settingShopName.value.trim()||"شاهین فروشگاه";
+saveDB();alert("د دکان نوم بدل شو");
+});
+
+function renderReports(){
+const from=dateFrom.value,to=dateTo.value;
+const within=x=>(!from||x.date>=from)&&(!to||x.date<=to);
+const sales=db.sales.filter(within);
+const purchases=db.purchases.filter(within);
+const expenses=db.expenses.filter(within);
+const totalSales=sales.reduce((a,x)=>a+x.total,0);
+const totalPurchases=purchases.reduce((a,x)=>a+x.total,0);
+const profit=sales.reduce((a,x)=>a+(x.price-x.cost)*x.qty,0);
+const expense=expenses.reduce((a,x)=>a+x.amount,0);
+reportSales.textContent=money(totalSales);
+reportPurchases.textContent=money(totalPurchases);
+reportProfit.textContent=money(profit);
+reportExpense.textContent=money(expense);
+reportNet.textContent=money(profit-expense);
+}
+function clearReportDates(){dateFrom.value="";dateTo.value="";renderReports();}
 
 function renderAll(){
- document.getElementById("shopTitle").textContent=db.settings.shopName;
- document.getElementById("settingShopName").value=db.settings.shopName;
+shopTitle.textContent=db.settings.shopName||"شاهین فروشگاه";
+settingShopName.value=db.settings.shopName||"شاهین فروشگاه";
+countProducts.textContent=db.products.length;
+stockValue.textContent=money(db.products.reduce((a,p)=>a+p.qty*p.buy,0));
+totalSales.textContent=money(db.sales.reduce((a,s)=>a+s.total,0));
+totalPurchases.textContent=money(db.purchases.reduce((a,p)=>a+p.total,0));
+customerDebt.textContent=money(db.customers.reduce((a,c)=>a+customerBalance(c),0));
+supplierDebt.textContent=money(db.suppliers.reduce((a,s)=>a+supplierBalance(s),0));
+totalExpenses.textContent=money(db.expenses.reduce((a,x)=>a+x.amount,0));
+const profit=db.sales.reduce((a,s)=>a+(s.price-s.cost)*s.qty,0);
+netProfit.textContent=money(profit-db.expenses.reduce((a,x)=>a+x.amount,0));
 
- const products=db.products;
- const sales=db.sales;
- const purchases=db.purchases;
- const expenses=db.expenses;
+productsTable.innerHTML=db.products.map(p=>`
+<tr><td>${esc(p.name)}</td><td>${esc(p.unit)}</td><td>${p.qty}</td>
+<td>${money(p.buy)}</td><td>${money(p.sell)}</td>
+<td><button onclick="editProduct('${p.id}')">اصلاح</button>
+<button class="danger" onclick="deleteProduct('${p.id}')">حذف</button></td></tr>`).join("");
 
- document.getElementById("countProducts").textContent=products.length;
- document.getElementById("stockValue").textContent=money(products.reduce((a,p)=>a+p.qty*p.buy,0));
- document.getElementById("totalSales").textContent=money(sales.reduce((a,s)=>a+s.total,0));
- document.getElementById("totalPurchases").textContent=money(purchases.reduce((a,p)=>a+p.total,0));
- document.getElementById("customerDebt").textContent=money(db.customers.reduce((a,c)=>a+customerBalance(c),0));
- document.getElementById("supplierDebt").textContent=money(db.suppliers.reduce((a,s)=>a+supplierBalance(s),0));
- document.getElementById("totalExpenses").textContent=money(expenses.reduce((a,x)=>a+x.amount,0));
+const opts='<option value="">محصول وټاکه</option>'+db.products.map(p=>`<option value="${p.id}">${esc(p.name)} — ${p.qty}</option>`).join("");
+purchaseProduct.innerHTML=opts;saleProduct.innerHTML=opts;
+purchaseSupplier.innerHTML='<option value="">نغدي / نامعلوم</option>'+db.suppliers.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+saleCustomer.innerHTML='<option value="">نغدي / نامعلوم</option>'+db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
 
- document.getElementById("productsTable").innerHTML=products.map(p=>`
- <tr><td>${esc(p.name)}</td><td>${esc(p.unit)}</td><td>${p.qty}</td>
- <td>${money(p.buy)}</td><td>${money(p.sell)}</td>
- <td><button onclick="editProduct('${p.id}')">اصلاح</button>
- <button class="danger" onclick="deleteProduct('${p.id}')">حذف</button></td></tr>`).join("");
-
- const productOptions='<option value="">محصول وټاکه</option>'+products.map(p=>`<option value="${p.id}">${esc(p.name)} — موجودي: ${p.qty}</option>`).join("");
- document.getElementById("purchaseProduct").innerHTML=productOptions;
- document.getElementById("saleProduct").innerHTML=productOptions;
-
- document.getElementById("purchaseSupplier").innerHTML='<option value="">نغدي / نامعلوم</option>'+db.suppliers.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
- document.getElementById("saleCustomer").innerHTML='<option value="">نغدي / نامعلوم</option>'+db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
-
- document.getElementById("purchasesTable").innerHTML=purchases.map(p=>`
- <tr><td>${p.date}</td><td>${esc(p.productName)}</td><td>${p.qty}</td><td>${money(p.total)}</td><td>${money(p.paid)}</td></tr>`).join("");
-
- document.getElementById("salesTable").innerHTML=sales.map(s=>`
- <tr><td>${s.date}</td><td>${esc(s.productName)}</td><td>${s.qty}</td><td>${money(s.total)}</td><td>${money(s.paid)}</td></tr>`).join("");
-
- document.getElementById("customersTable").innerHTML=db.customers.map(c=>`
- <tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${money(c.opening)}</td><td>${money(customerBalance(c))}</td></tr>`).join("");
-
- document.getElementById("suppliersTable").innerHTML=db.suppliers.map(s=>`
- <tr><td>${esc(s.name)}</td><td>${esc(s.phone)}</td><td>${money(s.opening)}</td><td>${money(supplierBalance(s))}</td></tr>`).join("");
-
- document.getElementById("expensesTable").innerHTML=expenses.map(x=>`
- <tr><td>${x.date}</td><td>${esc(x.name)}</td><td>${money(x.amount)}</td></tr>`).join("");
-
- const totalSales=sales.reduce((a,s)=>a+s.total,0);
- const totalPurchases=purchases.reduce((a,p)=>a+p.total,0);
- const gross=sales.reduce((a,s)=>a+(s.price-s.cost)*s.qty,0);
- const totalExpenses=expenses.reduce((a,x)=>a+x.amount,0);
-
- document.getElementById("reportSales").textContent=money(totalSales);
- document.getElementById("reportPurchases").textContent=money(totalPurchases);
- document.getElementById("reportProfit").textContent=money(gross);
- document.getElementById("reportExpense").textContent=money(totalExpenses);
- document.getElementById("reportNet").textContent=money(gross-totalExpenses);
-}
-
-function esc(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+purchasesTable.innerHTML=db.purchases.map(p=>`<tr><td>${p.date}</td><td>${esc(p.productName)}</td><td>${p.qty}</td><td>${money(p.total)}</td><td>${money(p.paid)}</td></tr>`).join("");
+salesTable.innerHTML=db.sales.map(s=>`<tr><td>${s.date}</td><td>${esc(s.productName)}</td><td>${s.qty}</td><td>${money(s.total)}</td><td>${money(s.paid)}</td></tr>`).join("");
+customersTable.innerHTML=db.customers.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${money(c.opening)}</td><td>${money(customerBalance(c))}</td></tr>`).join("");
+suppliersTable.innerHTML=db.suppliers.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.phone)}</td><td>${money(s.opening)}</td><td>${money(supplierBalance(s))}</td></tr>`).join("");
+expensesTable.innerHTML=db.expenses.map(x=>`<tr><td>${x.date}</td><td>${esc(x.name)}</td><td>${money(x.amount)}</td></tr>`).join("");
+paymentsTable.innerHTML=db.payments.map(p=>`<tr><td>${p.date}</td><td>${p.type==="customer"?"د مشتری تادیه":"عرضه‌کوونکي ته پرداخت"}</td><td>${esc(p.personName)}</td><td>${money(p.amount)}</td><td>${esc(p.note)}</td></tr>`).join("");
+renderPaymentPeople();
+renderReports();
 }
 
 function backupData(){
- const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;
- a.download="DukanPro_Backup_"+dateNow()+".json";
- a.click();
- URL.revokeObjectURL(url);
+const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;a.download="DukanPro_Backup_"+dateNow()+".json";
+a.click();URL.revokeObjectURL(url);
 }
 
 function restoreData(){
- const file=document.getElementById("restoreFile").files[0];
- if(!file)return alert("لومړی Backup فایل وټاکه");
- if(!confirm("اوسني معلومات به د Backup معلوماتو سره بدل شي. ادامه ورکړو؟"))return;
-
- const reader=new FileReader();
- reader.onload=function(){
-  try{
-   const restored=JSON.parse(reader.result);
-   if(restored.version!==2 || !Array.isArray(restored.products) || !Array.isArray(restored.sales)){
-    return alert("دا Backup د دې اپلیکیشن مناسب فایل نه دی");
-   }
-   db=restored;
-   saveDB();
-   alert("Backup بېرته داخل شو");
-  }catch(e){
-   alert("فایل سم نه دی");
-  }
- };
- reader.readAsText(file);
+const file=restoreFile.files[0];
+if(!file)return alert("Backup فایل وټاکه");
+if(!confirm("اوسني معلومات به د Backup معلوماتو سره بدل شي. ادامه؟"))return;
+const reader=new FileReader();
+reader.onload=()=>{
+try{
+const data=JSON.parse(reader.result);
+if(!Array.isArray(data.products)||!Array.isArray(data.sales))return alert("Backup فایل سم نه دی");
+db=data;normalizeDB();saveDB();alert("Backup بېرته داخل شو");
+}catch(e){alert("فایل سم نه دی");}
+};
+reader.readAsText(file);
 }
 
 function clearData(){
- if(!confirm("خبرداری! ټول دکان معلومات به حذف شي. مخکې Backup اخیستی؟"))return;
- if(!confirm("وروستی تایید: ټول معلومات حذف شي؟"))return;
- db=newDB();
- saveDB();
- alert("معلومات حذف شول");
+if(!confirm("ټول معلومات حذف شي؟"))return;
+if(!confirm("وروستی تایید!"))return;
+db=newDB();saveDB();alert("معلومات حذف شول");
 }
 
 renderAll();
