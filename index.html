@@ -39,6 +39,57 @@ th{background:#e8f0f8}
 .gray{background:#64748b}
 footer{text-align:center;padding:20px;color:#64748b}
 .notice{background:#fff7d6;padding:12px;border-radius:8px;margin-bottom:12px}
+
+.sale-page{padding:0}
+.sale-heading{background:white;padding:20px 15px;border-radius:22px 22px 0 0}
+.sale-heading h3{font-size:25px;color:#172033}
+.sale-form{background:white;padding:18px 15px;border-radius:0 0 20px 20px}
+.sale-form input,.sale-form select{
+  border:1px solid #dce4ef;
+  border-radius:15px;
+  min-height:54px;
+  font-size:17px;
+}
+.sale-form label{color:#64748b;font-size:14px}
+.sale-form #saleProductSearch{
+  border:3px solid #0870e8;
+  border-radius:22px;
+  min-height:65px;
+  margin:12px 0;
+}
+.customer-select-row{display:flex;gap:8px}
+.customer-select-row select{flex:1;min-width:0}
+.customer-select-row button{width:58px;font-size:24px}
+.sale-stock-info{text-align:center;color:#64748b;padding:12px}
+.sale-actions{display:flex;gap:12px;margin:12px 0}
+.sale-actions button{flex:1;min-height:60px;font-size:19px;border-radius:18px}
+.sale-summary{
+  background:#f1f5f9;
+  border-radius:22px;
+  padding:16px;
+  margin:18px 0;
+}
+.sale-summary div{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:7px 0;
+  font-size:18px;
+}
+.sale-summary b{font-size:20px;color:#0870df}
+.sale-summary div:last-child b{color:#e54848}
+.sale-submit{
+  width:100%;
+  min-height:70px;
+  border-radius:20px;
+  background:#0866d9;
+  font-size:23px;
+  font-weight:bold;
+}
+@media(max-width:600px){
+  .sale-form .row{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
 </style>
 </head>
 
@@ -129,28 +180,102 @@ footer{text-align:center;padding:20px;color:#64748b}
 </table></div>
 </section>
 
-<section id="sale" class="page">
-<h3>د خرڅلاو ثبت</h3>
-<form id="saleForm">
-<div class="row">
-<div><label> <div>
-<label>د خرڅلاو ډول</label>
-<select id="saleType" required>
-<option value="retail">پرچون خرڅلاو</option>
-<option value="wholesale">عمده خرڅلاو</option>
-</select>
-</div>محصول</label><select id="saleProduct" required></select></div>
-<div><label>مقدار</label><input id="saleQty" type="number" min="0.001" step="any" required></div>
-<div><label>د هر واحد قیمت</label><input id="salePrice" type="number" min="0" required></div>
-<div><label>پرداخت شوې پیسې</label><input id="salePaid" type="number" min="0" value="0" required></div>
-<div><label>مشتری</label><select id="saleCustomer"><option value="">نغدي / نامعلوم</option></select></div>
-</div>
-<button type="submit">خرڅلاو ثبت کړه</button>
-</form>
-<div class="tablewrap"><table>
-<thead><tr><th>نېټه</th><th>محصول</th><th>مقدار</th><th>مجموعه</th><th>پرداخت</th></tr></thead>
-<tbody id="salesTable"></tbody>
-</table></div>
+<section id="sale" class="page sale-page">
+  <div class="sale-heading">
+    <h3>🧾 نوی خرڅلاو</h3>
+  </div>
+
+  <form id="saleForm" class="sale-form">
+
+    <label>🔍 د جنس نوم یا بارکوډ ولیکه...</label>
+    <input id="saleProductSearch" type="search"
+      placeholder="د جنس نوم یا بارکوډ ولټوه...">
+
+    <div class="row">
+      <div>
+        <label>مشتری</label>
+        <div class="customer-select-row">
+          <select id="saleCustomer">
+            <option value="">عادي مشتری (نغدي)</option>
+          </select>
+          <button type="button" onclick="showPage('customers')">＋</button>
+        </div>
+      </div>
+
+      <div>
+        <label>نېټه</label>
+        <input type="date" id="saleDate" required>
+      </div>
+    </div>
+
+    <label>د خرڅلاو ډول</label>
+    <select id="saleType" required>
+      <option value="retail">پرچون خرڅلاو</option>
+      <option value="wholesale">عمده خرڅلاو</option>
+    </select>
+
+    <label>جنس وټاکه</label>
+    <select id="saleProduct" required></select>
+
+    <p id="saleStockInfo" class="sale-stock-info">
+      جنس وټاکه
+    </p>
+
+    <div class="row">
+      <div>
+        <label>مقدار</label>
+        <input id="saleQty" type="number" min="0.001"
+          step="any" value="1" required>
+      </div>
+      <div>
+        <label>د هر واحد نرخ</label>
+        <input id="salePrice" type="number" min="0"
+          value="0" required>
+      </div>
+      <div>
+        <label>تخفیف (AFN)</label>
+        <input id="saleDiscount" type="number" min="0"
+          value="0">
+      </div>
+      <div>
+        <label>ورکړل شوې پیسې (نغدي)</label>
+        <input id="salePaid" type="number" min="0"
+          value="0" required>
+      </div>
+    </div>
+
+    <div class="sale-actions">
+      <button type="button" class="green"
+        onclick="setSalePayment('cash')">💵 ټول نغدي</button>
+      <button type="button" class="danger"
+        onclick="setSalePayment('credit')">📒 ټول پور</button>
+    </div>
+
+    <div class="sale-summary">
+      <div><span>ټول</span><b id="saleSubtotalPreview">AFN 0</b></div>
+      <div><span>تخفیف</span><b id="saleDiscountPreview">AFN 0</b></div>
+      <div><span>وروستی مبلغ</span><b id="saleTotalPreview">AFN 0</b></div>
+      <div><span>ورکړل شوې پیسې</span><b id="salePaidPreview">AFN 0</b></div>
+      <div><span>پاتې پور</span><b id="saleDebtPreview">AFN 0</b></div>
+    </div>
+
+    <button type="submit" class="sale-submit">
+      ✅ ثبت خرڅلاو
+    </button>
+  </form>
+
+  <h3>د خرڅلاو تاریخچه</h3>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>نېټه</th><th>ډول</th><th>محصول</th>
+          <th>مقدار</th><th>مجموعه</th><th>پرداخت</th>
+        </tr>
+      </thead>
+      <tbody id="salesTable"></tbody>
+    </table>
+  </div>
 </section>
 
 <section id="customers" class="page">
